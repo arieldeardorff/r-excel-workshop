@@ -1,2 +1,3 @@
 # r-excel-workshop
-My repo for the online class "R for Excel Users"
+My practice repo for working through the online class ["R for Excel Users"](https://rstudio-conf-2020.github.io/r-for-excel/)
+
