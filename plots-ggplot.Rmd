@@ -5,26 +5,58 @@ date: "10/20/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+Loading our libraries
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+```
+Loading the California National Park Data
+```{r}
+ca_np <- read_csv(here("data", "ca_np.csv"))
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+useful commands for exploring a dataset
+```{r}
+names(ca_np)
+head(ca_np)
+summary(ca_np)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+loading the excel dataset for Channel Islands National Park
+```{r}
+ci_np <- read_excel(here("data","ci_np.xlsx"))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Let's investigate the visitors to Channel Island NP
+```{r}
+ggplot(data = ci_np, aes(x = year, y = visitors )) + geom_line()
+```
+
+store this plots as ggbase 
+```{r}
+gg_base <- ggplot(data = ci_np, aes(x = year, y = visitors))
+```
+
+Let's do some customizing
+```{r}
+gg_base + geom_point(
+  color = "forestgreen",
+  pch = 17,
+  size = 2,
+  alpha = 1
+)
+```
+
+List of color names: http://sape.inf.usi.ch/quick-reference/ggplot2/colour 
+
+Create a scatterplot where the size and color of the points are based on the number of visitors and make everything the same opacity (.5)
+```{r}
+ggplot(data = ci_np, aes(x = year, y = visitors, size = visitors, color = visitors)) + geom_point(alpha = .5)
+```
+
+Create a column plot fo the visitors over time where the fill color changes based on the number of visitors
+```{r}
+gg_base + geom_col(aes(fill = visitors))
+```
+
